@@ -1,0 +1,8 @@
+event_id,machine_id,timestamp,status,temperature,vibration,units_produced,defect_count
+69999,704,5,RUNNING,20.0,1.0,10
+70001,704,-5,RUNNING,20.0,1.0,10,0
+70002,-5,10,RUNNING,20.0,1.0,10,0
+70003,704,10,RUNNING,,1.0,10,0
+70004,704,20,RUNNING,20.0,1.0,-5,0
+
+70005,704,30,RUNNING,20.0,1.0,10,0

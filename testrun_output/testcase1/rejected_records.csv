@@ -1,0 +1,10 @@
+source_file,line_number,record_id,reason_code
+machine_master.csv,5,104,DUPLICATE_MACHINE_ID
+machine_master.csv,6,104,DUPLICATE_MACHINE_ID
+machine_master.csv,7,105,INVALID_TEMPERATURE_LIMITS
+machine_events.csv,5,10004,OUT_OF_ORDER_TIMESTAMP
+machine_events.csv,7,10006,UNKNOWN_MACHINE_ID
+machine_events.csv,8,10007,DUPLICATE_EVENT_ID
+machine_events.csv,9,10007,DUPLICATE_EVENT_ID
+machine_events.csv,10,10008,INVALID_STATUS
+machine_events.csv,13,10011,INVALID_DEFECT_COUNT

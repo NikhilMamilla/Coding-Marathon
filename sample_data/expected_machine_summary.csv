@@ -1,0 +1,4 @@
+machine_id,machine_type,location,accepted_event_count,running_event_count,idle_event_count,maintenance_event_count,stopped_event_count,average_temperature,maximum_vibration,latest_units_produced,latest_defect_count,temperature_anomaly_count,vibration_anomaly_count
+101,Cutting,LineA,2,2,0,0,0,70.25,6.00,110,3,1,0
+102,Welding,LineA,1,0,1,0,0,45.00,2.10,80,1,0,0
+103,Packing,LineB,3,3,0,0,0,43.67,4.50,45,3,1,1

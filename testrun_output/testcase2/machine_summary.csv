@@ -1,0 +1,2 @@
+machine_id,machine_type,location,accepted_event_count,running_event_count,idle_event_count,maintenance_event_count,stopped_event_count,average_temperature,maximum_vibration,latest_units_produced,latest_defect_count,temperature_anomaly_count,vibration_anomaly_count
+201,Lathe,CellA,3,1,1,0,1,30.00,2.00,10,1,0,0

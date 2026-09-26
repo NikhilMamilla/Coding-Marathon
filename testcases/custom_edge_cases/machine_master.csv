@@ -1,0 +1,7 @@
+machine_id,machine_type,minimum_temperature,maximum_temperature,maximum_vibration,location
+699,TypeX,10.0,50.0,2.0
+701,,10.0,50.0,2.0,LineX
+702,TypeA,10.0,50.0,,LineX
+703,TypeA,10.0,50.0,2.0,
+704,TypeA,10.0,50.0,2.0,LineY
+705,TypeB,10.0,50.0,2.0,LineZ

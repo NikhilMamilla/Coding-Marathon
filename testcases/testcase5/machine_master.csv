@@ -1,0 +1,6 @@
+machine_id,machine_type,minimum_temperature,maximum_temperature,maximum_vibration,location
+501,Lathe,20.0,50.0,3.0,AreaA
+502,Furnace,50.0,90.0,4.0,AreaB
+503,Oven,0.0,100.0,5.0,AreaC
+504,Drill,10.0,40.0,2.0,AreaD
+505,Inspection,10.0,20.0,1.0,AreaE

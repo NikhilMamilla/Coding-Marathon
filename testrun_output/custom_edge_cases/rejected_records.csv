@@ -1,0 +1,10 @@
+source_file,line_number,record_id,reason_code
+machine_master.csv,2,UNKNOWN,INCOMPLETE_MACHINE_RECORD
+machine_master.csv,3,701,MISSING_MACHINE_TYPE
+machine_master.csv,4,702,INVALID_VIBRATION_LIMIT
+machine_master.csv,5,703,MISSING_LOCATION
+machine_events.csv,2,UNKNOWN,INCOMPLETE_EVENT_RECORD
+machine_events.csv,3,70001,INVALID_TIMESTAMP
+machine_events.csv,4,70002,INVALID_MACHINE_ID
+machine_events.csv,5,70003,INVALID_TEMPERATURE
+machine_events.csv,6,70004,INVALID_PRODUCTION_COUNT

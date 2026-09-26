@@ -1,0 +1,5 @@
+source_file,line_number,record_id,reason_code
+machine_events.csv,5,40004,OUT_OF_ORDER_TIMESTAMP
+machine_events.csv,7,40006,UNKNOWN_MACHINE_ID
+machine_events.csv,8,40007,INVALID_STATUS
+machine_events.csv,9,40008,INVALID_VIBRATION

@@ -1,0 +1,4 @@
+event_id,machine_id,timestamp,status,temperature,vibration,units_produced,defect_count
+20001,201,0,RUNNING,10.0,2.0,0,0
+20002,201,5,IDLE,30.0,1.5,10,0
+20003,201,10,STOPPED,50.0,2.0,10,1

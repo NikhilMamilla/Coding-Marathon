@@ -1,0 +1,6 @@
+source_file,line_number,record_id,reason_code
+machine_events.csv,17,60016,DUPLICATE_EVENT_ID
+machine_events.csv,18,60017,UNKNOWN_MACHINE_ID
+machine_events.csv,19,60018,INVALID_STATUS
+machine_events.csv,20,60019,OUT_OF_ORDER_TIMESTAMP
+machine_events.csv,21,60016,DUPLICATE_EVENT_ID

@@ -1,0 +1,7 @@
+machine_id,machine_type,minimum_temperature,maximum_temperature,maximum_vibration,location
+101,Cutting,20.0,80.0,6.0,LineA
+102,Welding,25.0,100.0,8.0,LineA
+103,Packing,15.0,60.0,4.0,LineB
+104,Drilling,20.0,75.0,5.0,LineC
+104,Drilling,20.0,78.0,5.5,LineD
+105,Inspection,70.0,30.0,3.0,LineB

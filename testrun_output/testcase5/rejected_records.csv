@@ -1,0 +1,3 @@
+source_file,line_number,record_id,reason_code
+machine_events.csv,12,50011,OUT_OF_ORDER_TIMESTAMP
+machine_events.csv,13,50012,UNKNOWN_MACHINE_ID

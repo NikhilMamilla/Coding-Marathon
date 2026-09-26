@@ -1,0 +1,3 @@
+event_id,machine_id,timestamp,anomaly_code,observed_value,reference_value
+30004,302,10,LOW_TEMPERATURE,-1.0,0.0
+30004,302,10,HIGH_VIBRATION,4.0,3.0

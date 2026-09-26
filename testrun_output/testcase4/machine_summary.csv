@@ -1,0 +1,4 @@
+machine_id,machine_type,location,accepted_event_count,running_event_count,idle_event_count,maintenance_event_count,stopped_event_count,average_temperature,maximum_vibration,latest_units_produced,latest_defect_count,temperature_anomaly_count,vibration_anomaly_count
+401,Robot,Zone1,2,2,0,0,0,33.00,3.00,20,1,1,1
+402,Conveyor,Zone2,1,0,1,0,0,20.00,1.50,0,0,0,0
+403,Tester,Zone3,1,0,0,1,0,25.00,0.00,0,0,0,0

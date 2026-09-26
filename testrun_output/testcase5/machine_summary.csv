@@ -1,0 +1,6 @@
+machine_id,machine_type,location,accepted_event_count,running_event_count,idle_event_count,maintenance_event_count,stopped_event_count,average_temperature,maximum_vibration,latest_units_produced,latest_defect_count,temperature_anomaly_count,vibration_anomaly_count
+501,Lathe,AreaA,2,1,1,0,0,35.00,2.00,20,1,0,0
+502,Furnace,AreaB,2,2,0,0,0,55.00,4.00,15,1,0,0
+503,Oven,AreaC,2,0,0,1,1,50.00,5.00,5,1,0,0
+504,Drill,AreaD,1,1,0,0,0,25.00,1.00,4,0,0,0
+505,Inspection,AreaE,3,3,0,0,0,15.33,2.00,5,1,1,2

@@ -1,0 +1,9 @@
+machine_id,machine_type,location,accepted_event_count,running_event_count,idle_event_count,maintenance_event_count,stopped_event_count,average_temperature,maximum_vibration,latest_units_produced,latest_defect_count,temperature_anomaly_count,vibration_anomaly_count
+601,TypeA,Line1,2,1,1,0,0,25.00,2.00,20,1,0,0
+602,TypeB,Line1,2,2,0,0,0,40.00,3.00,10,1,0,0
+603,TypeC,Line2,2,1,0,0,1,7.00,1.60,5,1,1,1
+604,TypeD,Line2,2,1,0,1,0,27.50,4.00,10,0,0,0
+605,TypeE,Line3,2,2,0,0,0,30.00,2.50,2,0,0,0
+606,TypeF,Line3,2,1,1,0,0,52.50,5.00,5,0,0,0
+607,TypeG,Line4,2,2,0,0,0,60.00,6.00,6,1,0,0
+608,TypeH,Line4,1,1,0,0,0,40.00,3.00,4,0,0,0

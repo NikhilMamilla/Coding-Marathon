@@ -1,0 +1,2 @@
+machine_id,machine_type,minimum_temperature,maximum_temperature,maximum_vibration,location
+201,Lathe,10.0,50.0,2.0,CellA
