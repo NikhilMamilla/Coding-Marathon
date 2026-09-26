@@ -1,0 +1,469 @@
+<title>Machine Watch</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+:root{
+  color-scheme: light;
+  --bg:#eae5da; --bg-flat:#e2dccd;
+  --panel:rgba(255,253,247,.62); --panel-border:rgba(255,253,247,.85);
+  --ink:#27221c; --ink-soft:#5c5448; --ink-muted:#8a8071;
+  --accent:#1c7d72; --accent-deep:#125a52; --accent-soft:#d2ece7; --accent-soft-ink:#125a52;
+  --neu-hi:#fffdf8; --neu-lo:rgba(150,135,108,.38);
+  --good:#0ca30c; --warning:#c98300; --serious:#c85a34; --critical:#c22f2f;
+  --good-bg:#0ca30c1a; --warning-bg:#fab2191a; --serious-bg:#ec835a1a; --critical-bg:#d03b3b1a;
+  --hero-grad: radial-gradient(135% 160% at 12% -10%, #35a698 0%, #1c7d72 38%, #124f48 72%, #0a2b27 100%);
+  --divider: rgba(39,34,28,.1);
+  --log-bg:#f7f4ec; --log-border:rgba(39,34,28,.08); --log-head:#8a8071;
+  --log-src:#6b6153; --log-ln:#8a8071; --log-rid:#125a52; --log-rc:#a3491f;
+  --shadow-soft: 0 1px 2px rgba(30,25,15,.06), 0 10px 28px rgba(30,25,15,.10);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme: dark;
+    --bg:#191510; --bg-flat:#201b15;
+    --panel:rgba(32,27,21,.55); --panel-border:rgba(255,250,240,.08);
+    --ink:#f1ece1; --ink-soft:#cabfa9; --ink-muted:#948a76;
+    --accent:#45b8ab; --accent-deep:#7fd8cc; --accent-soft:#173f39; --accent-soft-ink:#a6e5d9;
+    --neu-hi:rgba(255,255,255,.04); --neu-lo:rgba(0,0,0,.65);
+    --good:#33c04c; --warning:#e0a53a; --serious:#e0795a; --critical:#e2584f;
+    --good-bg:#33c04c22; --warning-bg:#e0a53a22; --serious-bg:#e0795a22; --critical-bg:#e2584f22;
+    --hero-grad: radial-gradient(135% 160% at 12% -10%, #2ea89c 0%, #176a61 38%, #0c332e 72%, #05100e 100%);
+    --divider: rgba(255,250,240,.09);
+    --log-bg:#100d0a; --log-border:rgba(255,250,240,.06); --log-head:#6b6153;
+    --log-src:#998e78; --log-ln:#8c8270; --log-rid:#e3cf8f; --log-rc:#ff9b7a;
+    --shadow-soft: 0 1px 2px rgba(0,0,0,.4), 0 10px 30px rgba(0,0,0,.5);
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme: dark;
+  --bg:#191510; --bg-flat:#201b15;
+  --panel:rgba(32,27,21,.55); --panel-border:rgba(255,250,240,.08);
+  --ink:#f1ece1; --ink-soft:#cabfa9; --ink-muted:#948a76;
+  --accent:#45b8ab; --accent-deep:#7fd8cc; --accent-soft:#173f39; --accent-soft-ink:#a6e5d9;
+  --neu-hi:rgba(255,255,255,.04); --neu-lo:rgba(0,0,0,.65);
+  --good:#33c04c; --warning:#e0a53a; --serious:#e0795a; --critical:#e2584f;
+  --good-bg:#33c04c22; --warning-bg:#e0a53a22; --serious-bg:#e0795a22; --critical-bg:#e2584f22;
+  --hero-grad: radial-gradient(135% 160% at 12% -10%, #2ea89c 0%, #176a61 38%, #0c332e 72%, #05100e 100%);
+  --divider: rgba(255,250,240,.09);
+  --log-bg:#100d0a; --log-border:rgba(255,250,240,.06); --log-head:#6b6153;
+  --log-src:#998e78; --log-ln:#8c8270; --log-rid:#e3cf8f; --log-rc:#ff9b7a;
+  --shadow-soft: 0 1px 2px rgba(0,0,0,.4), 0 10px 30px rgba(0,0,0,.5);
+}
+*{box-sizing:border-box}
+html{scrollbar-color: color-mix(in srgb, var(--ink) 30%, transparent) transparent; scrollbar-width:thin}
+::-webkit-scrollbar{width:10px;height:10px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--divider);border-radius:8px}
+::-webkit-scrollbar-thumb:hover{background:var(--ink-muted)}
+body{
+  background:
+    radial-gradient(60% 50% at 85% -10%, color-mix(in srgb, var(--accent) 8%, transparent) 0%, transparent 60%),
+    var(--bg);
+  color:var(--ink); font-family:"Inter",system-ui,sans-serif; line-height:1.55;
+}
+h1,h2,h3,.display{font-family:"Rajdhani",system-ui,sans-serif; font-weight:700; letter-spacing:.01em; text-wrap:balance; margin:0}
+.mono{font-family:"IBM Plex Mono",ui-monospace,monospace; font-variant-numeric:tabular-nums}
+a{color:inherit}
+.wrap{max-width:1280px; margin:0 auto; padding-inline:clamp(20px,4vw,40px)}
+.eyebrow{font-family:"IBM Plex Mono",monospace; font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--ink-muted)}
+
+/* ---------- topbar (glass) ---------- */
+.topbar{
+  position:sticky; top:env(safe-area-inset-top,0px); z-index:40;
+  background:var(--panel); backdrop-filter:blur(16px) saturate(1.3); -webkit-backdrop-filter:blur(16px) saturate(1.3);
+  border-bottom:1px solid var(--panel-border);
+}
+.topbar .wrap{display:flex; align-items:center; justify-content:space-between; padding-block:12px; gap:12px}
+.brand{display:flex; align-items:center; gap:10px}
+.brand-mark{width:34px;height:34px;border-radius:9px;background:linear-gradient(150deg,var(--accent),var(--accent-deep));display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow-soft);flex-shrink:0}
+.brand-mark svg{width:19px;height:19px}
+.brand-name{font-family:"Rajdhani";font-weight:700;font-size:18px;letter-spacing:.02em;line-height:1.2}
+.brand-sub{font-size:11px;color:var(--ink-muted);font-family:"IBM Plex Mono",monospace;line-height:1.4}
+.led{width:7px;height:7px;border-radius:50%;background:var(--good);box-shadow:0 0 0 3px var(--good-bg),0 0 8px var(--good);display:inline-block;animation:pulse 2.4s ease-in-out infinite;flex-shrink:0}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.45}}
+.top-right{display:flex;align-items:center;gap:14px}
+.status-line{font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--ink-soft);display:flex;align-items:center;gap:6px}
+
+/* skeuomorphic toggle switch */
+.switch{position:relative;width:56px;height:30px;border-radius:16px;border:none;cursor:pointer;padding:0;flex-shrink:0;
+  background:linear-gradient(180deg,#cfd6df,#b9c2cd);
+  box-shadow:inset 0 2px 4px rgba(0,0,0,.28), inset 0 -1px 0 rgba(255,255,255,.5), 0 1px 1px rgba(255,255,255,.4);}
+:root[data-theme="dark"] .switch{background:linear-gradient(180deg,#22262e,#181b21); box-shadow:inset 0 2px 4px rgba(0,0,0,.6), inset 0 -1px 0 rgba(255,255,255,.04);}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .switch{background:linear-gradient(180deg,#22262e,#181b21); box-shadow:inset 0 2px 4px rgba(0,0,0,.6), inset 0 -1px 0 rgba(255,255,255,.04);}}
+.switch .knob{position:absolute;top:3px;left:3px;width:24px;height:24px;border-radius:50%;
+  background:linear-gradient(160deg,#fff,#dfe4ea);
+  box-shadow:0 2px 3px rgba(0,0,0,.35), inset 0 1px 1px rgba(255,255,255,.9);
+  transition:transform .25s cubic-bezier(.4,1.4,.5,1); display:flex;align-items:center;justify-content:center;font-size:12px}
+[data-theme="dark"] .switch .knob{transform:translateX(26px); background:linear-gradient(160deg,#3a4150,#20242c); box-shadow:0 2px 3px rgba(0,0,0,.6), inset 0 1px 1px rgba(255,255,255,.08);}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .switch .knob{transform:translateX(26px); background:linear-gradient(160deg,#3a4150,#20242c); box-shadow:0 2px 3px rgba(0,0,0,.6), inset 0 1px 1px rgba(255,255,255,.08);}}
+
+section{padding-block:44px}
+
+/* ---------- hero (maximalist) ---------- */
+.hero{
+  background:var(--hero-grad); border-radius:26px; color:#fff; position:relative; overflow:hidden;
+  padding:40px clamp(20px,4vw,48px); box-shadow:var(--shadow-soft);
+  isolation:isolate;
+}
+.hero::before{content:"";position:absolute;inset:0;z-index:-1;
+  background:
+    radial-gradient(50% 75% at 100% 0%, rgba(255,255,255,.14) 0%, transparent 62%),
+    radial-gradient(45% 65% at 78% 100%, rgba(255,255,255,.07) 0%, transparent 60%);}
+.hero-top{display:flex;flex-wrap:wrap;gap:32px;align-items:flex-start;justify-content:space-between}
+.hero-copy{flex:1 1 360px;min-width:0}
+.hero h1{font-size:clamp(28px,4vw,42px);margin:6px 0 8px;color:#fff}
+.hero p.lede{color:rgba(255,255,255,.78);max-width:52ch;font-size:14.5px;margin:0}
+.hero .eyebrow{color:rgba(255,255,255,.6)}
+.kpi-row{display:flex;gap:clamp(18px,3vw,40px);flex-wrap:wrap;margin-top:30px}
+.kpi{min-width:110px}
+.kpi .num{font-family:"IBM Plex Mono";font-weight:600;font-size:clamp(26px,3.4vw,36px);line-height:1;color:#fff}
+.kpi .lbl{font-size:11px;color:rgba(255,255,255,.62);margin-top:7px;line-height:1.3}
+.ring-wrap{display:flex;flex-direction:column;align-items:center;gap:8px;flex-shrink:0}
+.ring{width:132px;height:132px;border-radius:50%;
+  background:conic-gradient(#8ce8d9 0turn, #8ce8d9 calc(var(--pct)*1turn), rgba(255,255,255,.15) 0);
+  display:flex;align-items:center;justify-content:center;box-shadow:inset 0 0 0 1px rgba(255,255,255,.12);}
+.ring-inner{width:100px;height:100px;border-radius:50%;background:rgba(8,24,22,.55);backdrop-filter:blur(4px);
+  display:flex;flex-direction:column;align-items:center;justify-content:center}
+.ring-inner b{font-family:"IBM Plex Mono";font-size:24px;color:#fff;line-height:1}
+.ring-inner span{font-size:10px;color:rgba(255,255,255,.65);letter-spacing:.06em;text-transform:uppercase;margin-top:4px}
+
+/* ---------- section headers ---------- */
+.sec-head{display:flex;align-items:baseline;justify-content:space-between;gap:16px;margin-bottom:20px;flex-wrap:wrap}
+.sec-head h2{font-size:22px;margin-top:3px}
+
+/* ---------- project brief (minimalist zone) ---------- */
+.brief p{color:var(--ink-soft);font-size:14.5px;line-height:1.7;margin:18px 0 0}
+.brief-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:28px}
+.brief-item{background:var(--bg-flat); border-radius:16px; padding:20px;
+  box-shadow:7px 7px 16px var(--neu-lo), -7px -7px 16px var(--neu-hi);}
+.brief-item .n{font-family:"IBM Plex Mono";font-size:11px;color:var(--accent);margin-bottom:8px}
+.brief-item h4{font-size:14.5px;font-weight:600;font-family:"Inter";margin-bottom:8px}
+.brief-item p{font-size:12.5px;color:var(--ink-muted);margin:0}
+.brief-foot{display:flex;flex-wrap:wrap;gap:10px 28px;margin-top:22px;padding-top:18px;border-top:1px solid var(--divider)}
+.brief-foot div{font-size:12px;color:var(--ink-soft)}
+.brief-foot b{color:var(--ink);font-weight:600}
+
+/* ---------- neumorphic machine cards (flat zone) ---------- */
+.flat-zone{background:var(--bg-flat); border-radius:26px; padding:32px clamp(18px,3vw,36px)}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:22px}
+.neu-card{background:var(--bg-flat); border-radius:20px; padding:20px;
+  box-shadow:8px 8px 18px var(--neu-lo), -8px -8px 18px var(--neu-hi);}
+.neu-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;gap:10px}
+.neu-head h3{font-size:19px;margin:0;line-height:1.25}
+.neu-head .loc{font-size:11.5px;color:var(--ink-muted);font-family:"IBM Plex Mono",monospace;margin-top:2px}
+.mid-badge{font-family:"IBM Plex Mono";font-size:11px;background:var(--accent-soft);color:var(--accent-soft-ink);padding:3px 8px;border-radius:7px;flex-shrink:0;
+  box-shadow:inset 0 0 0 1px color-mix(in srgb, var(--accent) 25%, transparent)}
+
+/* skeuomorphic gauge */
+.gauge{display:flex;align-items:center;gap:16px;margin-bottom:14px}
+.dial{width:96px;height:58px;position:relative;flex-shrink:0}
+.dial svg{position:absolute;inset:0;overflow:visible}
+.dial .needle{position:absolute;left:48px;bottom:0;width:2.5px;height:44px;background:linear-gradient(var(--critical),var(--ink));
+  transform-origin:bottom center;border-radius:2px;box-shadow:0 0 3px rgba(0,0,0,.3)}
+.dial .pivot{position:absolute;left:44px;bottom:-4px;width:8px;height:8px;border-radius:50%;
+  background:radial-gradient(circle at 35% 30%,#fff,var(--ink-soft));box-shadow:0 1px 2px rgba(0,0,0,.4)}
+.gauge-read{font-family:"IBM Plex Mono"}
+.gauge-read .v{font-size:20px;font-weight:600;color:var(--ink)}
+.gauge-read .u{font-size:11px;color:var(--ink-muted);margin-left:2px}
+.gauge-read .range{font-size:10.5px;color:var(--ink-muted);margin-top:3px}
+
+.vib-row{margin-bottom:14px}
+.vib-label{display:flex;justify-content:space-between;font-size:11.5px;color:var(--ink-soft);margin-bottom:6px}
+.vib-track{height:12px;border-radius:7px;background:var(--bg-flat);
+  box-shadow:inset 3px 3px 6px var(--neu-lo), inset -3px -3px 6px var(--neu-hi); overflow:hidden;padding:2px}
+.vib-fill{height:100%;border-radius:5px;background:linear-gradient(90deg,var(--accent),var(--accent-deep));box-shadow:0 0 6px color-mix(in srgb, var(--accent) 60%, transparent)}
+
+.chip-row{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+.chip{font-size:10.5px;font-family:"IBM Plex Mono";padding:4px 8px;border-radius:6px;background:var(--bg);color:var(--ink-soft);line-height:1.3;
+  box-shadow:1px 1px 3px var(--neu-lo), -1px -1px 3px var(--neu-hi)}
+.anomaly-badges{display:flex;flex-wrap:wrap;gap:8px}
+.abadge{display:inline-flex;align-items:center;gap:5px;font-size:11px;padding:4px 9px;border-radius:8px;font-weight:500;line-height:1.3}
+.abadge.temp{background:var(--warning-bg);color:var(--warning)}
+.abadge.vib{background:var(--serious-bg);color:var(--serious)}
+.abadge.none{background:var(--good-bg);color:var(--good)}
+.abadge svg{width:12px;height:12px;flex-shrink:0}
+
+/* ---------- glass panels ---------- */
+.glass{background:var(--panel);backdrop-filter:blur(14px) saturate(1.2);-webkit-backdrop-filter:blur(14px) saturate(1.2);
+  border:1px solid var(--panel-border); border-radius:22px; padding:24px clamp(16px,3vw,28px); box-shadow:var(--shadow-soft)}
+.two-col{display:grid;grid-template-columns:1.15fr 1fr;gap:22px}
+@media(max-width:860px){.two-col{grid-template-columns:1fr}}
+
+/* timeline chart */
+.tl-legend{display:flex;gap:16px;flex-wrap:wrap;font-size:11.5px;color:var(--ink-soft);margin-top:10px}
+.tl-legend span{display:inline-flex;align-items:center;gap:6px}
+.dot{width:9px;height:9px;border-radius:50%;display:inline-block;flex-shrink:0}
+svg text{fill:var(--ink-muted);font-family:"IBM Plex Mono",monospace;font-size:10px}
+svg .lane-label{fill:var(--ink-soft);font-family:"Inter";font-size:11.5px;font-weight:600}
+svg .grid{stroke:var(--divider);stroke-width:1}
+svg .axis{stroke:var(--ink-muted);stroke-width:1}
+
+/* minimalist bar chart */
+.bar-row{display:grid;grid-template-columns:168px 1fr 34px;align-items:center;gap:10px;margin-bottom:12px}
+.bar-row .rc{font-family:"IBM Plex Mono";font-size:11px;color:var(--ink-soft);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bar-track{height:16px;background:var(--divider);border-radius:4px;overflow:hidden}
+.bar-fill{height:100%;background:linear-gradient(90deg,var(--accent-soft),var(--accent));border-radius:4px 0 0 4px}
+.bar-row .n{font-family:"IBM Plex Mono";font-size:12px;color:var(--ink);text-align:right}
+
+/* ---------- console log (skeuomorphic terminal) ---------- */
+.console{background:var(--log-bg); border-radius:18px; padding:0; overflow:hidden;
+  box-shadow:var(--shadow-soft); border:1px solid var(--log-border)}
+.console-bar{display:flex;gap:6px;align-items:center;padding:11px 14px;background:color-mix(in srgb, var(--log-border) 60%, transparent);border-bottom:1px solid var(--log-border)}
+.console-bar i{width:9px;height:9px;border-radius:50%;display:inline-block;flex-shrink:0}
+.console-title{margin-left:8px;font-family:"IBM Plex Mono";font-size:11px;color:var(--log-head)}
+.console-head{display:grid;grid-template-columns:200px 44px 96px 1fr;gap:14px;padding:9px 18px;
+  font-family:"IBM Plex Mono";font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--log-head);border-bottom:1px solid var(--log-border)}
+.console-body{font-family:"IBM Plex Mono";font-size:12px;padding:6px 18px 14px}
+.crow{display:grid;grid-template-columns:200px 44px 96px 1fr;gap:14px;padding:6px 0;border-bottom:1px dashed var(--log-border)}
+.crow:last-child{border-bottom:none}
+.crow .src{color:var(--log-src);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.crow .ln{color:var(--log-ln)}
+.crow .rid{color:var(--log-rid)}
+.crow .rc{color:var(--log-rc)}
+
+/* ---------- scale strip (maximalist band) ---------- */
+.scale-strip{border-radius:20px;background:var(--bg-flat);border:1px solid var(--panel-border);padding:26px clamp(18px,3vw,40px);
+  display:flex;flex-wrap:wrap;gap:28px;align-items:center;justify-content:space-between}
+.scale-strip .grp{min-width:120px}
+.scale-strip .num{font-family:"IBM Plex Mono";font-weight:600;font-size:26px;color:var(--accent);line-height:1}
+.scale-strip .lbl{font-size:11px;color:var(--ink-muted);margin-top:6px}
+
+footer{padding:30px 0 48px;text-align:center;border-top:1px solid var(--divider)}
+footer p{font-family:"IBM Plex Mono",monospace;font-size:11.5px;color:var(--ink-muted);letter-spacing:.02em}
+footer p b{color:var(--ink-soft);font-weight:500}
+</style>
+
+<div class="topbar">
+  <div class="wrap">
+    <div class="brand">
+      <div class="brand-mark"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M12 2v4M12 18v4M4.9 4.9l2.8 2.8M16.3 16.3l2.8 2.8M2 12h4M18 12h4M4.9 19.1l2.8-2.8M16.3 7.7l2.8-2.8"/><circle cx="12" cy="12" r="3.4"/></svg></div>
+      <div><div class="brand-name">Machine Watch</div><div class="brand-sub">shift report · sample_data</div></div>
+    </div>
+    <div class="top-right">
+      <div class="status-line"><span class="led"></span> pipeline nominal</div>
+      <button class="switch" id="themeToggle" aria-label="Toggle dark mode"><span class="knob" id="knob">☀</span></button>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+
+<section>
+  <div class="hero">
+    <div class="hero-top">
+      <div class="hero-copy">
+        <div class="eyebrow">Industrial Equipment Event Log · Console Summary</div>
+        <h1>Shift processing report</h1>
+        <p class="lede">Output of the validation → anomaly-detection → statistics pipeline over <span class="mono">machine_master.csv</span> and <span class="mono">machine_events.csv</span> (section 24 worked example). Every figure below is read from this run's actual generated CSVs.</p>
+        <div class="kpi-row">
+          <div class="kpi"><div class="num">6</div><div class="lbl">machine records · 3 valid</div></div>
+          <div class="kpi"><div class="num">12</div><div class="lbl">event records</div></div>
+          <div class="kpi"><div class="num">9</div><div class="lbl">rejected records</div></div>
+          <div class="kpi"><div class="num">3</div><div class="lbl">anomaly rows</div></div>
+        </div>
+      </div>
+      <div class="ring-wrap">
+        <div class="ring" style="--pct:.5"><div class="ring-inner"><b>50%</b><span>accepted</span></div></div>
+        <div class="eyebrow" style="color:rgba(255,255,255,.55)">6 of 12 events</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="brief" style="padding-top:6px">
+  <div class="sec-head"><div><div class="eyebrow">Question 4 · requirements brief</div><h2>What this system does</h2></div></div>
+  <p>An industrial facility runs several production machines that stream status, temperature, vibration, and production-count events. This pipeline reads that machine roster and event log, rejects anything incomplete, duplicated, out of order, or tied to an unknown machine, flags operating anomalies against each machine's own limits, and rolls the rest into per-machine statistics. The flow is end to end: CSV files in, CSV reports and a console summary out.</p>
+
+  <div class="brief-grid">
+    <div class="brief-item"><div class="n">01</div><h4>Validate</h4><p>Every field checked against a fixed priority order, so one record gets exactly one reason code even when several rules fail.</p></div>
+    <div class="brief-item"><div class="n">02</div><h4>De-duplicate</h4><p>Machine IDs and Event IDs are frequency-counted across the whole file first, so every occurrence of a duplicate is rejected, not just the second one.</p></div>
+    <div class="brief-item"><div class="n">03</div><h4>Order &amp; detect</h4><p>Events must not run backward in time per machine; accepted events are then checked for temperature and vibration limit breaches.</p></div>
+    <div class="brief-item"><div class="n">04</div><h4>Report</h4><p>Machine-wise statistics, an anomaly log, and a rejection log, each with a fixed header, row order, and decimal format.</p></div>
+  </div>
+
+  <div class="brief-foot">
+    <div><b>Languages</b> C / C++ / Python (this build: Python)</div>
+    <div><b>Input</b> machine_master.csv + machine_events.csv</div>
+    <div><b>Outputs</b> machine_summary.csv · anomalies.csv · rejected_records.csv</div>
+    <div><b>Scale target</b> several hundred thousand event rows</div>
+  </div>
+</section>
+
+<section class="flat-zone" style="padding-top:32px">
+  <div class="sec-head">
+    <div><div class="eyebrow">machine_summary.csv</div><h2>Machine health</h2></div>
+    <div class="eyebrow">3 valid unique machines</div>
+  </div>
+  <div class="cards">
+
+    <div class="neu-card">
+      <div class="neu-head"><div><h3>101 · Cutting</h3><div class="loc">LineA</div></div><div class="mid-badge">#101</div></div>
+      <div class="gauge">
+        <div class="dial">
+          <svg viewBox="0 0 96 58"><path d="M6 54 A42 42 0 0 1 90 54" fill="none" stroke="var(--divider)" stroke-width="8" stroke-linecap="round"/>
+            <path d="M6 54 A42 42 0 0 1 48 12" fill="none" stroke="var(--good)" stroke-width="8" stroke-linecap="round" opacity=".55"/>
+            <path d="M48 12 A42 42 0 0 1 90 54" fill="none" stroke="var(--warning)" stroke-width="8" stroke-linecap="round" opacity=".4"/></svg>
+          <div class="needle" style="transform:rotate(61deg)"></div><div class="pivot"></div>
+        </div>
+        <div class="gauge-read"><div class="v">70.25<span class="u">°C avg</span></div><div class="range">range 20–80°C</div></div>
+      </div>
+      <div class="vib-row"><div class="vib-label"><span>peak vibration</span><span class="mono">6.00 / 6.0</span></div>
+        <div class="vib-track"><div class="vib-fill" style="width:100%"></div></div></div>
+      <div class="chip-row"><span class="chip">2 accepted</span><span class="chip">2 running</span><span class="chip">units 110</span><span class="chip">defects 3</span></div>
+      <div class="anomaly-badges">
+        <span class="abadge temp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v14M9 20a3 3 0 006 0"/></svg>1 high-temp</span>
+        <span class="abadge none"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12l5 5L20 6"/></svg>0 vibration</span>
+      </div>
+    </div>
+
+    <div class="neu-card">
+      <div class="neu-head"><div><h3>102 · Welding</h3><div class="loc">LineA</div></div><div class="mid-badge">#102</div></div>
+      <div class="gauge">
+        <div class="dial">
+          <svg viewBox="0 0 96 58"><path d="M6 54 A42 42 0 0 1 90 54" fill="none" stroke="var(--divider)" stroke-width="8" stroke-linecap="round"/>
+            <path d="M6 54 A42 42 0 0 1 48 12" fill="none" stroke="var(--good)" stroke-width="8" stroke-linecap="round" opacity=".55"/>
+            <path d="M48 12 A42 42 0 0 1 90 54" fill="none" stroke="var(--warning)" stroke-width="8" stroke-linecap="round" opacity=".4"/></svg>
+          <div class="needle" style="transform:rotate(-42deg)"></div><div class="pivot"></div>
+        </div>
+        <div class="gauge-read"><div class="v">45.00<span class="u">°C avg</span></div><div class="range">range 25–100°C</div></div>
+      </div>
+      <div class="vib-row"><div class="vib-label"><span>peak vibration</span><span class="mono">2.10 / 8.0</span></div>
+        <div class="vib-track"><div class="vib-fill" style="width:26.25%"></div></div></div>
+      <div class="chip-row"><span class="chip">1 accepted</span><span class="chip">1 idle</span><span class="chip">units 80</span><span class="chip">defects 1</span></div>
+      <div class="anomaly-badges">
+        <span class="abadge none"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12l5 5L20 6"/></svg>0 temp</span>
+        <span class="abadge none"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12l5 5L20 6"/></svg>0 vibration</span>
+      </div>
+    </div>
+
+    <div class="neu-card">
+      <div class="neu-head"><div><h3>103 · Packing</h3><div class="loc">LineB</div></div><div class="mid-badge">#103</div></div>
+      <div class="gauge">
+        <div class="dial">
+          <svg viewBox="0 0 96 58"><path d="M6 54 A42 42 0 0 1 90 54" fill="none" stroke="var(--divider)" stroke-width="8" stroke-linecap="round"/>
+            <path d="M6 54 A42 42 0 0 1 48 12" fill="none" stroke="var(--good)" stroke-width="8" stroke-linecap="round" opacity=".55"/>
+            <path d="M48 12 A42 42 0 0 1 90 54" fill="none" stroke="var(--warning)" stroke-width="8" stroke-linecap="round" opacity=".4"/></svg>
+          <div class="needle" style="transform:rotate(25deg)"></div><div class="pivot"></div>
+        </div>
+        <div class="gauge-read"><div class="v">43.67<span class="u">°C avg</span></div><div class="range">range 15–60°C</div></div>
+      </div>
+      <div class="vib-row"><div class="vib-label"><span>peak vibration</span><span class="mono">4.50 / 4.0 ⚠</span></div>
+        <div class="vib-track"><div class="vib-fill" style="width:100%;background:linear-gradient(90deg,var(--serious),var(--critical))"></div></div></div>
+      <div class="chip-row"><span class="chip">3 accepted</span><span class="chip">3 running</span><span class="chip">units 45</span><span class="chip">defects 3</span></div>
+      <div class="anomaly-badges">
+        <span class="abadge temp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v14M9 20a3 3 0 006 0"/></svg>1 high-temp</span>
+        <span class="abadge vib"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h4l2-7 4 14 2-7h6"/></svg>1 high-vib</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section>
+  <div class="sec-head"><div><div class="eyebrow">anomalies.csv · rejected_records.csv</div><h2>Events &amp; exceptions</h2></div></div>
+  <div class="two-col">
+
+    <div class="glass">
+      <h3 style="margin:0 0 4px;font-size:16px">Accepted-event timeline</h3>
+      <div class="eyebrow" style="margin-bottom:14px">by machine lane · timestamp (s)</div>
+      <svg viewBox="0 0 760 210" width="100%" role="img" aria-label="Timeline of accepted events per machine, anomalies marked">
+        <line class="grid" x1="153" y1="20" x2="153" y2="196"/><line class="grid" x1="380" y1="20" x2="380" y2="196"/>
+        <line class="grid" x1="493" y1="20" x2="493" y2="196"/><line class="grid" x1="607" y1="20" x2="607" y2="196"/>
+        <text x="153" y="208" text-anchor="middle">t=90</text><text x="380" y="208" text-anchor="middle">t=100</text>
+        <text x="493" y="208" text-anchor="middle">t=105</text><text x="607" y="208" text-anchor="middle">t=110</text>
+        <line class="axis" x1="40" y1="196" x2="720" y2="196"/>
+        <text class="lane-label" x="8" y="54">101</text><line class="grid" x1="40" y1="50" x2="720" y2="50"/>
+        <text class="lane-label" x="8" y="114">102</text><line class="grid" x1="40" y1="110" x2="720" y2="110"/>
+        <text class="lane-label" x="8" y="174">103</text><line class="grid" x1="40" y1="170" x2="720" y2="170"/>
+
+        <circle cx="380" cy="50" r="7" fill="var(--accent)"/><text x="380" y="34" text-anchor="middle">10001</text>
+        <circle cx="607" cy="50" r="9" fill="var(--warning)" stroke="var(--bg)" stroke-width="2"/><text x="607" y="34" text-anchor="middle">10002</text>
+
+        <circle cx="493" cy="110" r="7" fill="var(--accent)"/><text x="493" y="94" text-anchor="middle">10003</text>
+
+        <circle cx="153" cy="170" r="7" fill="var(--accent)"/><text x="153" y="154" text-anchor="middle">10005</text>
+        <circle cx="380" cy="170" r="10" fill="var(--critical)" stroke="var(--bg)" stroke-width="2"/><text x="380" y="150" text-anchor="middle">10009</text>
+        <circle cx="607" cy="170" r="7" fill="var(--accent)"/><text x="607" y="154" text-anchor="middle">10010</text>
+      </svg>
+      <div class="tl-legend">
+        <span><i class="dot" style="background:var(--accent)"></i>no anomaly</span>
+        <span><i class="dot" style="background:var(--warning)"></i>temperature anomaly</span>
+        <span><i class="dot" style="background:var(--critical)"></i>temperature + vibration</span>
+      </div>
+    </div>
+
+    <div class="glass">
+      <h3 style="margin:0 0 4px;font-size:16px">Rejections by reason</h3>
+      <div class="eyebrow" style="margin-bottom:16px">rejected_records.csv · 9 rows</div>
+      <div class="bar-row"><span class="rc">DUPLICATE_MACHINE_ID</span><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div><span class="n">2</span></div>
+      <div class="bar-row"><span class="rc">DUPLICATE_EVENT_ID</span><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div><span class="n">2</span></div>
+      <div class="bar-row"><span class="rc">INVALID_TEMPERATURE_LIMITS</span><div class="bar-track"><div class="bar-fill" style="width:50%"></div></div><span class="n">1</span></div>
+      <div class="bar-row"><span class="rc">OUT_OF_ORDER_TIMESTAMP</span><div class="bar-track"><div class="bar-fill" style="width:50%"></div></div><span class="n">1</span></div>
+      <div class="bar-row"><span class="rc">UNKNOWN_MACHINE_ID</span><div class="bar-track"><div class="bar-fill" style="width:50%"></div></div><span class="n">1</span></div>
+      <div class="bar-row"><span class="rc">INVALID_STATUS</span><div class="bar-track"><div class="bar-fill" style="width:50%"></div></div><span class="n">1</span></div>
+      <div class="bar-row"><span class="rc">INVALID_DEFECT_COUNT</span><div class="bar-track"><div class="bar-fill" style="width:50%"></div></div><span class="n">1</span></div>
+    </div>
+
+  </div>
+</section>
+
+<section style="padding-top:6px">
+  <div class="sec-head"><div><div class="eyebrow">rejected_records.csv</div><h2>Rejection log</h2></div></div>
+  <div class="console">
+    <div class="console-bar"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i><span class="console-title">rejected_records.csv · read only</span></div>
+    <div class="console-head"><span>source file</span><span>line</span><span>record id</span><span>reason code</span></div>
+    <div class="console-body">
+      <div class="crow"><span class="src">machine_master.csv</span><span class="ln">L5</span><span class="rid">104</span><span class="rc">DUPLICATE_MACHINE_ID</span></div>
+      <div class="crow"><span class="src">machine_master.csv</span><span class="ln">L6</span><span class="rid">104</span><span class="rc">DUPLICATE_MACHINE_ID</span></div>
+      <div class="crow"><span class="src">machine_master.csv</span><span class="ln">L7</span><span class="rid">105</span><span class="rc">INVALID_TEMPERATURE_LIMITS</span></div>
+      <div class="crow"><span class="src">machine_events.csv</span><span class="ln">L5</span><span class="rid">10004</span><span class="rc">OUT_OF_ORDER_TIMESTAMP</span></div>
+      <div class="crow"><span class="src">machine_events.csv</span><span class="ln">L7</span><span class="rid">10006</span><span class="rc">UNKNOWN_MACHINE_ID</span></div>
+      <div class="crow"><span class="src">machine_events.csv</span><span class="ln">L8</span><span class="rid">10007</span><span class="rc">DUPLICATE_EVENT_ID</span></div>
+      <div class="crow"><span class="src">machine_events.csv</span><span class="ln">L9</span><span class="rid">10007</span><span class="rc">DUPLICATE_EVENT_ID</span></div>
+      <div class="crow"><span class="src">machine_events.csv</span><span class="ln">L10</span><span class="rid">10008</span><span class="rc">INVALID_STATUS</span></div>
+      <div class="crow"><span class="src">machine_events.csv</span><span class="ln">L13</span><span class="rid">10011</span><span class="rc">INVALID_DEFECT_COUNT</span></div>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:6px">
+  <div class="scale-strip">
+    <div class="grp"><div class="eyebrow">scale run · testcase8</div><h3 style="margin:2px 0 0;font-size:17px;color:var(--ink)">Large-file benchmark</h3></div>
+    <div class="grp"><div class="num">500</div><div class="lbl">machines</div></div>
+    <div class="grp"><div class="num">200,000</div><div class="lbl">event records</div></div>
+    <div class="grp"><div class="num">~5.7s</div><div class="lbl">end-to-end runtime</div></div>
+    <div class="grp"><div class="num">~35k/s</div><div class="lbl">events processed per second</div></div>
+  </div>
+</section>
+
+<footer>
+  <p>Machine Watch · built by <b>Nikhil Mamilla</b></p>
+</footer>
+
+</div>
+
+<script>
+(function(){
+  var root = document.documentElement;
+  var btn = document.getElementById('themeToggle');
+  var knob = document.getElementById('knob');
+  var stored = null;
+  try { stored = localStorage.getItem('mw-theme'); } catch(e) {}
+  if (stored === 'light' || stored === 'dark') root.setAttribute('data-theme', stored);
+
+  function isDark(){
+    var explicit = root.getAttribute('data-theme');
+    if (explicit) return explicit === 'dark';
+    return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+  }
+  function paintKnob(){ knob.textContent = isDark() ? '☾' : '☀'; }
+  paintKnob();
+
+  btn.addEventListener('click', function(){
+    var next = isDark() ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    try { localStorage.setItem('mw-theme', next); } catch(e) {}
+    paintKnob();
+  });
+})();
+</script>

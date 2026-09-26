@@ -72,6 +72,10 @@ and `build_duplicate_id_set` directly (no file I/O). They cover:
 
 ## Results dashboard
 
+Live at **https://nikhilmamilla.github.io/Coding-Marathon/** (served from
+`docs/index.html` via GitHub Pages; `docs/index.html` is a copy of
+`dashboard.html` kept in sync with it).
+
 `dashboard.html` is a separate, static visualization of one run's
 output (the section-24 worked example): machine health cards, an
 accepted-event timeline, a rejection-reason breakdown, and the
