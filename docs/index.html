@@ -190,6 +190,8 @@ section{padding-block:44px}
 @media(max-width:860px){.two-col{grid-template-columns:1fr}}
 
 /* timeline chart */
+.tl-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.tl-scroll svg{width:100%;display:block}
 .tl-legend{display:flex;gap:16px;flex-wrap:wrap;font-size:11.5px;color:var(--ink-soft);margin-top:10px}
 .tl-legend span{display:inline-flex;align-items:center;gap:6px}
 .dot{width:9px;height:9px;border-radius:50%;display:inline-block;flex-shrink:0}
@@ -231,6 +233,36 @@ svg .axis{stroke:var(--ink-muted);stroke-width:1}
 footer{padding:30px 0 48px;text-align:center;border-top:1px solid var(--divider)}
 footer p{font-family:"IBM Plex Mono",monospace;font-size:11.5px;color:var(--ink-muted);letter-spacing:.02em}
 footer p b{color:var(--ink-soft);font-weight:500}
+
+/* ---------- phone-width fixes only; nothing here touches layout above 600px ---------- */
+@media (max-width:600px){
+  section{padding-block:32px}
+  .hero{padding:28px 20px}
+  .kpi-row{gap:16px 22px}
+  .kpi{min-width:38%}
+  .ring{width:112px;height:112px}
+  .ring-inner{width:84px;height:84px}
+
+  .tl-scroll svg{min-width:620px}
+
+  .status-text{display:none}
+  .top-right{gap:10px}
+
+  .brief-foot{gap:8px 20px}
+
+  .bar-row{grid-template-columns:106px 1fr 26px;gap:8px}
+  .bar-row .rc{font-size:9.5px}
+
+  .console-head{display:none}
+  .crow{display:flex;flex-wrap:wrap;column-gap:12px;row-gap:3px;padding:9px 0}
+  .crow .src{flex:1 1 100%;font-size:10.5px}
+  .crow .ln{order:2}
+  .crow .rid{order:3}
+  .crow .rc{order:4;flex:1 1 100%;font-size:11px}
+
+  .scale-strip{gap:18px 24px;padding:22px 20px}
+  .scale-strip .num{font-size:22px}
+}
 </style>
 
 <div class="topbar">
@@ -240,7 +272,7 @@ footer p b{color:var(--ink-soft);font-weight:500}
       <div><div class="brand-name">Machine Watch</div><div class="brand-sub">shift report · sample_data</div></div>
     </div>
     <div class="top-right">
-      <div class="status-line"><span class="led"></span> pipeline nominal</div>
+      <div class="status-line"><span class="led"></span> <span class="status-text">pipeline nominal</span></div>
       <button class="switch" id="themeToggle" aria-label="Toggle dark mode"><span class="knob" id="knob">☀</span></button>
     </div>
   </div>
@@ -366,7 +398,8 @@ footer p b{color:var(--ink-soft);font-weight:500}
     <div class="glass">
       <h3 style="margin:0 0 4px;font-size:16px">Accepted-event timeline</h3>
       <div class="eyebrow" style="margin-bottom:14px">by machine lane · timestamp (s)</div>
-      <svg viewBox="0 0 760 210" width="100%" role="img" aria-label="Timeline of accepted events per machine, anomalies marked">
+      <div class="tl-scroll">
+      <svg viewBox="0 0 760 210" role="img" aria-label="Timeline of accepted events per machine, anomalies marked">
         <line class="grid" x1="153" y1="20" x2="153" y2="196"/><line class="grid" x1="380" y1="20" x2="380" y2="196"/>
         <line class="grid" x1="493" y1="20" x2="493" y2="196"/><line class="grid" x1="607" y1="20" x2="607" y2="196"/>
         <text x="153" y="208" text-anchor="middle">t=90</text><text x="380" y="208" text-anchor="middle">t=100</text>
@@ -385,6 +418,7 @@ footer p b{color:var(--ink-soft);font-weight:500}
         <circle cx="380" cy="170" r="10" fill="var(--critical)" stroke="var(--bg)" stroke-width="2"/><text x="380" y="150" text-anchor="middle">10009</text>
         <circle cx="607" cy="170" r="7" fill="var(--accent)"/><text x="607" y="154" text-anchor="middle">10010</text>
       </svg>
+      </div>
       <div class="tl-legend">
         <span><i class="dot" style="background:var(--accent)"></i>no anomaly</span>
         <span><i class="dot" style="background:var(--warning)"></i>temperature anomaly</span>
