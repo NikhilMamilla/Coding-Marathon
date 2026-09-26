@@ -3,6 +3,9 @@
 A modular Python 3 implementation of Question 4 (Industrial Equipment
 Event Log Analysis and Reporting System).
 
+* Repository: https://github.com/NikhilMamilla/Coding-Marathon
+* Results dashboard (live): https://coding-marathon.vercel.app/
+
 ## Running it
 
 ```
@@ -72,9 +75,9 @@ and `build_duplicate_id_set` directly (no file I/O). They cover:
 
 ## Results dashboard
 
-Live at **https://nikhilmamilla.github.io/Coding-Marathon/** (served from
-`docs/index.html` via GitHub Pages; `docs/index.html` is a copy of
-`dashboard.html` kept in sync with it).
+Live at **https://coding-marathon.vercel.app/** (deployed from
+`docs/index.html`, a copy of `dashboard.html` kept in sync with it;
+Vercel auto-redeploys on every push to `main`).
 
 `dashboard.html` is a separate, static visualization of one run's
 output (the section-24 worked example): machine health cards, an
